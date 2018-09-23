@@ -1,0 +1,12 @@
+{
+    "name": "solodkiy/freeze",
+    "description": "Simple freeze trait",
+    "type": "library",
+    "license": "MIT",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Solodkiy\\Freeze\\": "src/"
+        }
+    }
+}
