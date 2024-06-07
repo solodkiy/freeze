@@ -1,0 +1,38 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  phpunit:
+    name: PHPUnit
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: ['8.1', '8.2', '8.3']
+        deps:
+          - "highest"
+        include:
+          - php-version: "8.1"
+            deps: "lowest"
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: mbstring, intl
+        coverage: xdebug
+
+    - name: Install composer dependencies
+      uses: ramsey/composer-install@v2
+      with:
+        dependency-versions: ${{ matrix.deps }}
+
+    - name: Run tests
+      run: vendor/bin/phpunit
