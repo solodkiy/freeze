@@ -2,30 +2,28 @@
 
 namespace Solodkiy\Freeze;
 
+use RuntimeException;
+
 trait FreezeTrait
 {
-    /**
-     * @var bool
-     */
-    private $frozen = false;
+    private bool $frozen = false;
 
-    public function freeze()
+    public function freeze(): void
     {
         $this->frozen = true;
     }
 
-    protected function assertNotFrozen()
+    protected function assertNotFrozen(): void
     {
         if ($this->frozen) {
-            throw new \RuntimeException('Object '.get_class($this).' was frozen');
+            throw new RuntimeException('Object ' . get_class($this) . ' was frozen');
         }
     }
 
-    public function assertFrozen()
+    public function assertFrozen(): void
     {
         if (!$this->frozen) {
-            throw new \RuntimeException('Object '.get_class($this).' is not frozen');
+            throw new RuntimeException('Object ' . get_class($this) . ' is not frozen');
         }
     }
-
 }
